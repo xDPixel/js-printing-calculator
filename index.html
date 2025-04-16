@@ -26,10 +26,7 @@
     }
 
     .calculator-container {
-        width: 100%;
         margin: 0 auto;
-        padding: 25px 10px;
-        background-color: var(--bg-color);
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
         border: 1px solid var(--primary-color);
@@ -151,7 +148,7 @@
 
   <button onclick="calculateFinalPrice()">احسب السعر</button>
 
-  <div id="final_price_result"></div>
+  <div id="final_price_result" style="display:none;"></div>
 </div>
 
   <script>
@@ -191,9 +188,11 @@
       if (finalPrice > 0) {
         resultBox.innerText = ` السعر التقريبي : ${finalPrice.toFixed(2)} ريال سعودي`;
         resultBox.className = 'success';
+        resultBox.style.display = 'block';
       } else {
         resultBox.innerText = '⚠️ الرجاء إدخال الوزن أو جميع الأبعاد (أرقام أكبر من صفر) لحساب السعر';
         resultBox.className = 'error';
+        resultBox.style.display = 'block';
       }
     }
 
