@@ -16,23 +16,33 @@
       --font-family: 'Tajawal', sans-serif;
     }
 
-    body {
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
       background-color: var(--bg-color);
       color: var(--text-color);
       font-family: var(--font-family);
-      padding: 20px;
       box-sizing: border-box;
-      margin: 0; /* Remove default body margin */
     }
 
     .calculator-container {
-        max-width: 400px;
-        margin: 20px auto;
-        padding: 25px;
-        background-color: #f5eefa;
+        width: 100%;
+        max-width: 500px;
+        min-width: 250px;
+        margin: 0 auto;
+        padding: 25px 10px;
+        background-color: var(--bg-color);
         border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        border: 1px solid #f5eefa;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+        border: 1px solid var(--primary-color);
+        box-sizing: border-box;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     h2 {
@@ -95,7 +105,8 @@
     }
 
     button:hover {
-        background-color: #f5eefa; /* Darker shade on hover */
+        background-color: var(--primary-color);
+        opacity: 0.9;
     }
 
     #final_price_result {
@@ -105,8 +116,9 @@
         font-weight: bold;
         text-align: center;
         font-size: 1.1rem;
-        background-color: #d6bde8 ;
-        border: 1px solid #d6bde8 ;
+        background-color: var(--secondary-color);
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
     }
 
     #final_price_result.success {
@@ -190,20 +202,16 @@
 
     // --- Dynamic Theming via iframe message ---
     window.addEventListener('message', (event) => {
-      // Optional: Add origin check for security
-      // if (event.origin !== 'YOUR_PARENT_DOMAIN') return;
-
       if (event.data && event.data.type === 'themeUpdate' && event.data.colors) {
-        console.log('Received theme update:', event.data.colors);
         const colors = event.data.colors;
         const root = document.documentElement;
-
-        // Update CSS variables
         if (colors.primary) root.style.setProperty('--primary-color', colors.primary);
         if (colors.secondary) root.style.setProperty('--secondary-color', colors.secondary);
         if (colors.background) root.style.setProperty('--bg-color', colors.background);
         if (colors.text) root.style.setProperty('--text-color', colors.text);
-        // Add more color variables as needed
+        if (colors.inputBorder) root.style.setProperty('--input-border-color', colors.inputBorder);
+        if (colors.result) root.style.setProperty('--result-color', colors.result);
+        if (colors.error) root.style.setProperty('--error-color', colors.error);
       }
     });
 
