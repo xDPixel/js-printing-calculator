@@ -152,18 +152,7 @@
 </div>
 
   <script>
-    if (!window.location.href.includes("https://khttar.com/calculator/")) {
-      document.addEventListener('DOMContentLoaded', function() {
-        var calc = document.querySelector('.calculator-container');
-        if (calc) {
-          calc.style.display = 'none';
-          document.body.style.margin = '0';
-          document.body.style.padding = '0';
-          document.documentElement.style.margin = '0';
-          document.documentElement.style.padding = '0';
-        }
-      });
-    }
+
     const FILAMENT_PRICE_PER_KG_SAR = 90;
     const DENSITY_G_CM3 = 1.24;
     const PRINT_MARKUP = 1.4;
@@ -227,5 +216,29 @@
     // window.parent.postMessage({ type: 'calculatorReady' }, '*'); // Use specific target origin in production
 
   </script>
+</body>
+</html>
+<script>
+  // تحقق من وجود النص المطلوب في الصفحة المستضيفة
+  var requiredText = "الأسعار تقريبية والسعر النهائي تحدده إدارة المتجر";
+  var found = false;
+  if (window.parent && window.parent !== window) {
+    try {
+      var parentBody = window.parent.document.body;
+      if (parentBody && parentBody.innerText && parentBody.innerText.indexOf(requiredText) !== -1) {
+        found = true;
+      }
+    } catch (e) {
+      // Cross-origin, fallback to current document
+    }
+  }
+  if (!found && document.body && document.body.innerText && document.body.innerText.indexOf(requiredText) !== -1) {
+    found = true;
+  }
+  if (!found) {
+    document.body.innerHTML = "";
+
+  }
+</script>
 </body>
 </html>
