@@ -126,7 +126,7 @@
     }
   </style>
 </head>
-<body>
+<body style="display:none;">
 <div class="calculator-container">
   <h2>حاسبة السعر التقريبي للطباعة ثلاثية الأبعاد</h2>
 
@@ -209,6 +209,10 @@
         if (colors.inputBorder) root.style.setProperty('--input-border-color', colors.inputBorder);
         if (colors.result) root.style.setProperty('--result-color', colors.result);
         if (colors.error) root.style.setProperty('--error-color', colors.error);
+      }
+      // إظهار الآلة الحاسبة فقط إذا استقبلنا رسالة "showCalculator" من الصفحة المستضيفة
+      if (event.data && event.data.type === 'showCalculator') {
+        document.body.style.display = 'block';
       }
     });
 
