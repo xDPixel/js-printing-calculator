@@ -219,7 +219,7 @@
 </body>
 </html>
 <script>
-  // تحقق من وجود النص المطلوب في الصفحة المستضيفة
+  // تحقق من وجود النص المطلوب فقط في window.parent.document.body.innerText عن النص المطلوب، وإذا لم يوجد لا يتم عرض أي شيء
   var requiredText = "الأسعار تقريبية والسعر النهائي تحدده إدارة المتجر";
   var found = false;
   if (window.parent && window.parent !== window) {
@@ -229,15 +229,11 @@
         found = true;
       }
     } catch (e) {
-      // Cross-origin, fallback to current document
+      // Cross-origin, لا يمكن التحقق
     }
-  }
-  if (!found && document.body && document.body.innerText && document.body.innerText.indexOf(requiredText) !== -1) {
-    found = true;
   }
   if (!found) {
     document.body.innerHTML = "";
-
   }
 </script>
 </body>
