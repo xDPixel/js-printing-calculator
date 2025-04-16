@@ -162,11 +162,13 @@
   <script>
     const FILAMENT_PRICE_PER_KG_SAR = 90;
     const DENSITY_G_CM3 = 1.24;
-    const PRINT_MARKUP = 1.25;
+    const PRINT_MARKUP = 1.4;
 
     function estimateWeightFromDimensions(length, width, height) {
-      const volume = length * width * height;
-      return volume * DENSITY_G_CM3;
+      // الحجم بالسم³ = الطول × العرض × الارتفاع
+      const volumeCm3 = length * width * height;
+      // الوزن بالجرام = الحجم × الكثافة
+      return volumeCm3 * DENSITY_G_CM3;
     }
 
     function estimateCost(weightGrams) {
@@ -186,17 +188,17 @@
 
       if (!isNaN(weight) && weight > 0) {
         finalPrice = estimateCost(weight);
-      } else if (!isNaN(length) && !isNaN(width) && !isNaN(height)) {
+      } else if (!isNaN(length) && length > 0 && !isNaN(width) && width > 0 && !isNaN(height) && height > 0) {
         const estWeight = estimateWeightFromDimensions(length, width, height);
         finalPrice = estimateCost(estWeight);
       }
 
       if (finalPrice > 0) {
         resultBox.innerText = ` السعر التقريبي : ${finalPrice.toFixed(2)} ريال سعودي`;
-        resultBox.className = 'success'; // Add success class
+        resultBox.className = 'success';
       } else {
-        resultBox.innerText = '⚠️ الرجاء إدخال الوزن أو جميع الأبعاد لحساب السعر';
-        resultBox.className = 'error'; // Add error class
+        resultBox.innerText = '⚠️ الرجاء إدخال الوزن أو جميع الأبعاد (أرقام أكبر من صفر) لحساب السعر';
+        resultBox.className = 'error';
       }
     }
 
