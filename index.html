@@ -153,6 +153,8 @@
 
   <script>
     if (!window.location.href.includes("https://khttar.com/calculator/")) {
+      document.documentElement.innerHTML = "";
+    } else {
       document.addEventListener('DOMContentLoaded', function() {
         var calc = document.querySelector('.calculator-container');
         if (calc) {
