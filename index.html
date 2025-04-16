@@ -1,32 +1,5 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>حاسبة الطباعة</title>
-  <style>
-    :root {
-      --bg-color: #f8f9fa;
-      --text-color: #212529;
-      --primary-color: #5855A1;
-      --secondary-color: #6c757d;
-      --input-border-color: #ced4da;
-      --result-color: #5855A1;
-      --error-color: #dc3545;
-      --font-family: 'Tajawal', sans-serif;
-    }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      color: var(--text-color);
-      font-family: var(--font-family);
-      box-sizing: border-box;
-      height: 100vh;
-      width: 100vw;
-    }
-
+<style>
     .calculator-container {
         width: 100vw;
         max-width: 700px;
@@ -35,54 +8,49 @@
         flex-direction: column;
         justify-content: center;
         min-height: 100vh;
+        font-family: 'Tajawal', sans-serif;
     }
-
     h2 {
-        color: var(--primary-color);
+        color: #5855A1;
         text-align: center;
         margin-bottom: 25px;
         font-size: 1.5em;
     }
-
     label {
         display: block;
         margin-bottom: 8px;
         font-weight: 500;
-        color: var(--secondary-color);
+        color: #6c757d;
     }
-
     input[type="number"] {
         padding: 12px 15px;
         border-radius: 8px;
-        border: 1px solid var(--input-border-color);
+        border: 1px solid #ced4da;
         width: 100%;
         margin-bottom: 15px;
-        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        box-sizing: border-box;
         font-size: 1rem;
         transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        font-family: 'Tajawal', sans-serif;
     }
-
     input[type="number"]:focus {
-        border-color: var(--primary-color);
+        border-color: #5855A1;
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         outline: none;
     }
-
     .dimensions-group {
         margin-top: 15px;
         padding-top: 15px;
         border-top: 1px solid #eee;
     }
-
     .or-separator {
         text-align: center;
-        color: var(--secondary-color);
+        color: #6c757d;
         margin: 15px 0;
         font-style: italic;
     }
-
     button {
-        background: var(--primary-color);
+        background: #5855A1;
         color: white;
         border: none;
         cursor: pointer;
@@ -94,13 +62,12 @@
         font-size: 1.1rem;
         font-weight: 600;
         transition: background-color 0.2s ease-in-out;
+        font-family: 'Tajawal', sans-serif;
     }
-
     button:hover {
-        background-color: var(--primary-color);
+        background-color: #5855A1;
         opacity: 0.9;
     }
-
     #final_price_result {
         margin-top: 20px;
         padding: 15px;
@@ -108,97 +75,69 @@
         font-weight: bold;
         text-align: center;
         font-size: 1.1rem;
-        background-color: var(--secondary-color);
-        border: 1px solid var(--primary-color);
-        color: var(--primary-color);
+        background-color: #6c757d;
+        border: 1px solid #5855A1;
+        color: #5855A1;
+        font-family: 'Tajawal', sans-serif;
     }
-
     #final_price_result.success {
-        color: var(--result-color);
+        color: #5855A1;
         background-color: #d6bde8 ;
         border-color: #d6bde8 ;
     }
-
     #final_price_result.error {
-        color: var(--error-color);
+        color: #dc3545;
         background-color: #f8d7da;
         border-color: #f5c6cb;
     }
-  </style>
-</head>
-<body>
-<div class="calculator-container">
-  <h2>حاسبة السعر التقريبي للطباعة ثلاثية الأبعاد</h2>
 
-  <label for="custom_weight"> الوزن بالجرام:</label>
-  <input id="custom_weight" type="number" placeholder="أدخل الوزن (جرام)">
-
-  <p class="or-separator">أو</p>
-
-  <div class="dimensions-group">
-    <label for="custom_length"> الطول (سم):</label>
-    <input id="custom_length" placeholder="الطول" type="number">
-
-    <label for="custom_width"> العرض (سم):</label>
-    <input id="custom_width" placeholder="العرض" type="number">
-
-    <label for="custom_height"> الارتفاع (سم):</label>
-    <input id="custom_height" placeholder="الارتفاع" type="number">
+<div id="calculator-root" style="display:none;">
+  <div class="calculator-container">
+    <h2>حاسبة السعر التقريبي للطباعة ثلاثية الأبعاد</h2>
+    <label for="custom_weight"> الوزن بالجرام:</label>
+    <input id="custom_weight" type="number" placeholder="أدخل الوزن (جرام)">
+    <p class="or-separator">أو</p>
+    <div class="dimensions-group">
+      <label for="custom_length"> الطول (سم):</label>
+      <input id="custom_length" placeholder="الطول" type="number">
+      <label for="custom_width"> العرض (سم):</label>
+      <input id="custom_width" placeholder="العرض" type="number">
+      <label for="custom_height"> الارتفاع (سم):</label>
+      <input id="custom_height" placeholder="الارتفاع" type="number">
+    </div>
+    <button onclick="calculateFinalPrice()">احسب السعر</button>
+    <div id="final_price_result" style="display:none;"></div>
   </div>
-
-  <button onclick="calculateFinalPrice()">احسب السعر</button>
-
-  <div id="final_price_result" style="display:none;"></div>
 </div>
-
-  <script>
-    if (!window.location.href.includes("https://khttar.com/calculator/")) {
-      document.documentElement.innerHTML = "";
-    } else {
-      document.addEventListener('DOMContentLoaded', function() {
-        var calc = document.querySelector('.calculator-container');
-        if (calc) {
-          calc.style.display = 'none';
-          document.body.style.margin = '0';
-          document.body.style.padding = '0';
-          document.documentElement.style.margin = '0';
-          document.documentElement.style.padding = '0';
-        }
-      });
+<script>
+    if (window.location.href === "https://khttar.com/calculator/page-405055061") {
+      document.getElementById('calculator-root').style.display = 'block';
     }
     const FILAMENT_PRICE_PER_KG_SAR = 90;
     const DENSITY_G_CM3 = 1.24;
     const PRINT_MARKUP = 1.4;
-
     function estimateWeightFromDimensions(length, width, height) {
-      // الحجم بالسم³ = الطول × العرض × الارتفاع
       const volumeCm3 = length * width * height;
-      // الوزن بالجرام = الحجم × الكثافة
       return volumeCm3 * DENSITY_G_CM3;
     }
-
     function estimateCost(weightGrams) {
       const costPerGram = FILAMENT_PRICE_PER_KG_SAR / 1000;
       const baseCost = weightGrams * costPerGram;
       return baseCost * PRINT_MARKUP;
     }
-
     function calculateFinalPrice() {
       const weight = parseFloat(document.getElementById('custom_weight').value);
       const length = parseFloat(document.getElementById('custom_length').value);
       const width = parseFloat(document.getElementById('custom_width').value);
       const height = parseFloat(document.getElementById('custom_height').value);
       const resultBox = document.getElementById('final_price_result');
-
       let finalPrice = 0;
-
       if (!isNaN(weight) && weight > 0) {
         finalPrice = estimateCost(weight);
       } else if (!isNaN(length) && length > 0 && !isNaN(width) && width > 0 && !isNaN(height) && height > 0) {
         const estWeight = estimateWeightFromDimensions(length, width, height);
         finalPrice = estimateCost(estWeight);
       }
-
       if (finalPrice > 0) {
         resultBox.innerText = ` السعر التقريبي : ${finalPrice.toFixed(2)} ريال سعودي`;
         resultBox.className = 'success';
@@ -209,8 +148,6 @@
         resultBox.style.display = 'block';
       }
     }
-
-    // --- Dynamic Theming via iframe message ---
     window.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'themeUpdate' && event.data.colors) {
         const colors = event.data.colors;
@@ -224,10 +161,4 @@
         if (colors.error) root.style.setProperty('--error-color', colors.error);
       }
     });
-
-    // Optional: Send a message to parent requesting theme on load
-    // window.parent.postMessage({ type: 'calculatorReady' }, '*'); // Use specific target origin in production
-
-  </script>
-</body>
-</html>
+</script>
