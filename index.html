@@ -155,7 +155,13 @@
     if (!window.location.href.includes("https://khttar.com/calculator/")) {
       document.addEventListener('DOMContentLoaded', function() {
         var calc = document.querySelector('.calculator-container');
-        if (calc) calc.style.display = 'none';
+        if (calc) {
+          calc.style.display = 'none';
+          document.body.style.margin = '0';
+          document.body.style.padding = '0';
+          document.documentElement.style.margin = '0';
+          document.documentElement.style.padding = '0';
+        }
       });
     }
     const FILAMENT_PRICE_PER_KG_SAR = 90;
