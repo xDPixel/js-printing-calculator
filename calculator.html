@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>حاسبة الطباعة</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #00b894;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #final_price_result {
+      margin-top: 15px;
+      color: #0f0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="color:#0ff;">حاسبة السعر التقريبي للطباعة ثلاثية الأبعاد</h2>
+
+  <label>🔢 الوزن بالجرام:
+    <input id="custom_weight" type="number" placeholder="أدخل الوزن (جرام)">
+  </label>
+
+  <p style="text-align:center;">أو</p>
+
+  <input id="custom_length" placeholder="📏 الطول (سم)" type="number">
+  <input id="custom_width" placeholder="📐 العرض (سم)" type="number">
+  <input id="custom_height" placeholder="🏗️ الارتفاع (سم)" type="number">
+
+  <button onclick="calculateFinalPrice()">احسب السعر</button>
+
+  <div id="final_price_result"></div>
+
+  <script>
+    const FILAMENT_PRICE_PER_KG_SAR = 90;
+    const DENSITY_G_CM3 = 1.24;
+    const PRINT_MARKUP = 1.25;
+
+    function estimateWeightFromDimensions(length, width, height) {
+      const volume = length * width * height;
+      return volume * DENSITY_G_CM3;
+    }
+
+    function estimateCost(weightGrams) {
+      const costPerGram = FILAMENT_PRICE_PER_KG_SAR / 1000;
+      const baseCost = weightGrams * costPerGram;
+      return baseCost * PRINT_MARKUP;
+    }
+
+    function calculateFinalPrice() {
+      const weight = parseFloat(document.getElementById('custom_weight').value);
+      const length = parseFloat(document.getElementById('custom_length').value);
+      const width = parseFloat(document.getElementById('custom_width').value);
+      const height = parseFloat(document.getElementById('custom_height').value);
+      const resultBox = document.getElementById('final_price_result');
+
+      let finalPrice = 0;
+
+      if (!isNaN(weight) && weight > 0) {
+        finalPrice = estimateCost(weight);
+      } else if (!isNaN(length) && !isNaN(width) && !isNaN(height)) {
+        const estWeight = estimateWeightFromDimensions(length, width, height);
+        finalPrice = estimateCost(estWeight);
+      }
+
+      if (finalPrice > 0) {
+        resultBox.innerText = `🔖 السعر التقريبي بعد ربح 25٪: ${finalPrice.toFixed(2)} ريال سعودي`;
+      } else {
+        resultBox.innerText = '⚠️ الرجاء إدخال الوزن أو جميع الأبعاد لحساب السعر';
+      }
+    }
+  </script>
+</body>
+</html>
