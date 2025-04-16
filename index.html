@@ -152,6 +152,12 @@
 </div>
 
   <script>
+    if (!window.location.href.includes("https://khttar.com/calculator/")) {
+      document.addEventListener('DOMContentLoaded', function() {
+        var calc = document.querySelector('.calculator-container');
+        if (calc) calc.style.display = 'none';
+      });
+    }
     const FILAMENT_PRICE_PER_KG_SAR = 90;
     const DENSITY_G_CM3 = 1.24;
     const PRINT_MARKUP = 1.4;
